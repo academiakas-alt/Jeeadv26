@@ -3,37 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JEE (Advanced) 2026 - Fee Payment</title>
+  <title>Pay Registration Fee - JEE (Advanced) 2026</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background-color: #f4f6f9; color: #333; }
-    
-    .header { background: #fff; padding: 10px 20px; border-bottom: 2px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; }
-    .nav-bar { background-color: #0056b3; color: #fff; padding: 8px 20px; font-size: 14px; }
-    
-    .main-container { display: flex; min-height: calc(100vh - 110px); }
-    
-    .sidebar { width: 250px; background-color: #0a234b; color: #fff; padding: 20px 0; }
-    .sidebar-item { padding: 12px 20px; border-bottom: 1px solid #1a3a6e; font-size: 13px; color: #d0e4ff; text-decoration: none; display: block; }
-    .sidebar-item.active { background: #1a3a6e; border-left: 4px solid #ffcc00; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background-color: #fff; color: #333; line-height: 1.6; }
 
-    .content-area { flex: 1; padding: 40px 25px; display: flex; justify-content: center; align-items: flex-start; }
-    
-    .error-card { 
-      background: #fff; 
-      border: 1px solid #dee2e6; 
-      border-radius: 8px; 
-      padding: 40px; 
-      max-width: 600px; 
-      text-align: center; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    /* Main Container */
+    .payment-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
     }
-    
-    .error-icon {
-      font-size: 50px;
-      color: #dc3545;
-      margin-bottom: 20px;
+
+    h2 { font-size: 24px; color: #444; margin-bottom: 5px; font-weight: 500; }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; }
+
+    /* Transaction Mode Section */
+    .transaction-box {
+      margin-bottom: 30px;
+      font-size: 15px;
+      font-weight: 600;
     }
+    .radio-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 10px;
+    }
+
+    .request-text {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+    .highlight-green { color: #28a745; font-weight: bold; }
+
+    /* Pay Button */
+    .btn-pay {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 40px;
+      transition: background 0.2s;
+    }
+    .btn-pay:hover { background-color: #004494; }
+
+    /* Charges Detail Box */
+    .charges-box {
+      border: 1px solid #cce5ff;
+      border-radius: 6px;
+      text-align: left;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .charges-header {
+      background-color: #f0f7ff;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #004085;
+      border-bottom: 1px solid #cce5ff;
+    }
+    .charges-body {
+      padding: 20px;
+      background-color: #fff;
+      font-size: 13.5px;
+      color: #666;
+    }
+    .arrow-icon { font-size: 12px; }
+
+    /* Sidebar Return Style */
+    .nav-back {
+        display: block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #0056b3;
+        font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h2>Pay Registration Fee</h2>
+    <p class="subtitle">Your Registration will be completed only after Payment of Registration Fee.</p>
+
+    <div class="transaction-box">
+      Transaction Mode : 
+      <label class="radio-group">
+        <input type="radio" checked name="fee"> Pay 3200 INR
+      </label>
+    </div>
+
+    <p class="request-text">
+      You are requested to <span class="highlight-green">Pay 3200 INR</span> towards Registration Fee.
+    </p>
+
+    <button class="btn-pay" onclick="triggerServiceAlert()">Pay Registration Fee</button>
+
+    <div class="charges-box">
+      <div class="charges-header">
+        <span>Payment Provider Charges Details</span>
+        <span class="arrow-icon">▲</span>
+      </div>
+      <div class="charges-body">
+        The individual payment gateways may levy additional charges.
+      </div>
+    </div>
+
+    <a href="dashboard.html" class="nav-back">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    // Logic to set status and show the alert as requested
+    window.onload = function() {
+        localStorage.setItem('paymentStatus', 'Unavailable');
+    };
+
+    function triggerServiceAlert() {
+        alert("this service is currently unavailable, please try again later");
+    }
+  </script>
+
+</body>
+</html>
     
     .error-title {
       font-size: 22px;
