@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Fee Collection - JEE (Advanced) 2026</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background-color: #fdfaf5; color: #333; padding: 20px; }
+    
+    .header-text { text-align: center; margin-bottom: 20px; }
+    .header-text h1 { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+    .header-text p { font-size: 14px; color: #444; }
+
+    .main-box {
+      max-width: 950px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .expiry-timer {
+      text-align: right;
+      color: #d9534f;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    /* Table Styles for User Details */
+    .section-title {
+      background: #f1f1f1;
+      padding: 5px 10px;
+      font-size: 13px;
+      text-align: center;
+      border: 1px solid #ddd;
+      font-weight: bold;
+    }
+
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .details-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 13px;
+      width: 25%;
+    }
+    .label-cell { font-weight: bold; }
+
+    /* Payment Provider Styles */
+    .payment-provider-section {
+      border: 1px solid #ddd;
+      margin-top: 10px;
+    }
+    .provider-options {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .radio-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      width: 100%;
+      max-width: 500px;
+    }
+    .btn-proceed {
+      background-color: #337ab7;
+      color: white;
+      border: 1px solid #2e6da4;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    .cancel-link {
+      font-size: 12px;
+      margin-top: 15px;
+      text-align: left;
+    }
+    .cancel-link a { color: #337ab7; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="header-text">
+  <h1>JEE (Advanced) 2026</h1>
+  <p>Online Registration Portal</p>
+</div>
+
+<div class="main-box">
+  <div class="expiry-timer">This Payment Request will be expired within : 09:58 minute</div>
+
+  <div class="section-title">User Details</div>
+  <table class="details-table">
+    <tr>
+      <td class="label-cell">Candidate's Name</td>
+      <td id="pay-name">N/A</td>
+      <td class="label-cell">Father's Name</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td class="label-cell">JEE (Main) Application number</td>
+      <td id="pay-appnum">N/A</td>
+      <td class="label-cell">Date of Birth</td>
+      <td id="pay-dob">N/A</td>
+    </tr>
+    <tr>
+      <td class="label-cell">Registration Fee Amount</td>
+      <td>3200 (INR)</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <div class="payment-provider-section">
+    <div class="section-title">Registration Fee Collection</div>
+    <div class="provider-options">
+      <div class="radio-row">
+        <input type="radio" name="provider" checked> SBI MOPS <span style="color: #666;">(Net Banking/Credit Card/Debit Card/eChallan/UPI)</span>
+      </div>
+      <div class="radio-row">
+        <input type="radio" name="provider"> SBI ePay <span style="color: #666;">(Net Banking/Credit Card/Debit Card/eChallan/UPI)</span>
+      </div>
+      <div class="radio-row">
+        <input type="radio" name="provider"> SBI ePay <span style="color: #666;">(INTERNATIONAL Credit Card)</span>
+      </div>
+      <div class="radio-row">
+        <input type="radio" name="provider"> BillDesk Payment Gateway <span style="color: #666;">(Net Banking/Credit Card/Debit Card/UPI)</span>
+      </div>
+      <button class="btn-proceed">Proceed for payment</button>
+    </div>
+  </div>
+  
+  <div class="cancel-link">
+    Click here to <a href="dashboard.html">Cancel</a> this Transaction.
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    // Populate data from sessionStorage to maintain the portal feel
+    document.getElementById('pay-name').textContent = sessionStorage.getItem('jeeName') || 'N/A';
+    document.getElementById('pay-appnum').textContent = sessionStorage.getItem('jeeAppNumber') || 'N/A';
+    document.getElementById('pay-dob').textContent = sessionStorage.getItem('jeeDob') || 'N/A';
+  };
+</script>
+
+</body>
+</html>
+
