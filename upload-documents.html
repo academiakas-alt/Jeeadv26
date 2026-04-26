@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JEE (Advanced) 2026 - Upload Certificates</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #f4f6f9; color: #333; }
+    
+    .header { background: #fff; padding: 10px 20px; border-bottom: 2px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; }
+    .nav-bar { background-color: #0056b3; color: #fff; padding: 8px 20px; font-size: 14px; }
+    
+    .main-container { display: flex; min-height: calc(100vh - 110px); }
+    
+    .sidebar { width: 250px; background-color: #0a234b; color: #fff; padding: 20px 0; }
+    .sidebar-item { padding: 12px 20px; border-bottom: 1px solid #1a3a6e; font-size: 13px; color: #d0e4ff; text-decoration: none; display: block; }
+    .sidebar-item.active { background: #1a3a6e; border-left: 4px solid #ffcc00; }
+
+    .content-area { flex: 1; padding: 25px; }
+    .upload-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 20px; max-width: 900px; margin: 0 auto; }
+    h2 { font-size: 18px; margin-bottom: 20px; color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    
+    .instruction-box { background-color: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; }
+    
+    .upload-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .upload-table th { background-color: #f8f9fa; text-align: left; padding: 12px; border: 1px solid #dee2e6; font-size: 14px; }
+    .upload-table td { padding: 12px; border: 1px solid #dee2e6; font-size: 14px; }
+    
+    .file-input-wrapper { display: flex; flex-direction: column; gap: 5px; }
+    .size-info { font-size: 11px; color: #6c757d; }
+    
+    .preview-container { margin-top: 10px; display: none; border: 1px dashed #ccc; padding: 10px; text-align: center; }
+    .preview-container img { max-width: 100%; max-height: 200px; }
+
+    .declaration-section { margin-top: 20px; padding: 15px; border-top: 1px solid #eee; }
+    .declaration-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #495057; }
+
+    .btn-container { margin-top: 20px; text-align: right; }
+    .btn-submit { background: #007bff; color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    .btn-submit:hover { background: #0069d9; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div style="font-weight: bold; font-size: 20px;">JEE (Advanced) 2026</div>
+    <div style="font-size: 12px;">Step 2: Upload Documents</div>
+  </div>
+  <div class="nav-bar">Home > Registration > Step 2</div>
+
+  <div class="main-container">
+    <div class="sidebar">
+      <a href="dashboard.html" class="sidebar-item">View JEE Main Details</a>
+      <a href="registration-form.html" class="sidebar-item">Fill Registration Form</a>
+      <a href="#" class="sidebar-item active">Upload Documents</a>
+      <a href="#" class="sidebar-item">Pay Registration Fee</a>
+    </div>
+
+    <div class="content-area">
+      <div class="upload-card">
+        <h2>Step 2: Upload Scanned Certificates</h2>
+        
+        <div class="instruction-box">
+          <strong>Note:</strong> Please pay attention to the minimum and maximum size allowed for each document and the file formats required.
+        </div>
+
+        <table class="upload-table">
+          <thead>
+            <tr>
+              <th style="width: 5%;">Sl. No.</th>
+              <th style="width: 45%;">Document Description</th>
+              <th style="width: 50%;">Upload File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Class X Marksheet (containing Date of Birth)</td>
+              <td>
+                <div class="file-input-wrapper">
+                  <input type="file" id="classXFile" accept=".pdf, .jpg, .jpeg" onchange="handleFileSelect(event)">
+                  <span class="size-info">Format: PDF/JPG | Size: 50KB - 300KB</span>
+                </div>
+                <div id="previewBox" class="preview-container">
+                  <p style="font-size: 12px; margin-bottom: 5px; color: #28a745;">Preview Embedded Below</p>
+                  <img id="previewImg" src="#" alt="Preview">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="declaration-section">
+          <div class="declaration-item">
+            <input type="checkbox" id="confirmCheck">
+            <label for="confirmCheck">
+              I understand that no changes will be permitted once the documents are uploaded.
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button class="btn-submit" onclick="handleSubmit()">Submit and Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      const previewBox = document.getElementById('previewBox');
+      const previewImg = document.getElementById('previewImg');
+
+      if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewBox.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      } else if (file && file.type === "application/pdf") {
+        previewBox.style.display = 'block';
+        previewImg.style.display = 'none';
+        const pdfMsg = document.createElement('p');
+        pdfMsg.innerText = "PDF file selected: " + file.name;
+        previewBox.appendChild(pdfMsg);
+      }
+    }
+
+    function handleSubmit() {
+  const fileInput = document.getElementById('classXFile');
+  const check = document.getElementById('confirmCheck');
+
+  if (!fileInput.files.length) {
+    alert("Please select the Class X Marksheet to upload.");
+    return;
+  }
+  if (!check.checked) {
+    alert("Please check the confirmation box before proceeding.");
+    return;
+  }
+
+  // 1. Success Message
+  alert("Successful upload of the files");
+
+  // 2. Save the completion status
+  localStorage.setItem('uploadStatus', 'Completed');
+
+  // 3. Redirect to dashboard
+  window.location.href = 'dashboard.html';
+}
+
+  </script>
+</body>
+</html>
+
