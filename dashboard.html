@@ -309,14 +309,17 @@
 </tr>
 
             <tr>
-              <td>Fee Payment</td>
-              <td>
-                <div class="status-pending">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                  Pending
-                </div>
-              </td>
-            </tr>
+  <td>Fee Payment</td>
+  <td id="payment-status-cell"> <div class="status-pending">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="8" y1="12" x2="16" y2="12"></line>
+      </svg>
+      Pending
+    </div>
+  </td>
+</tr>
+
           </tbody>
         </table>
       </div>
@@ -377,8 +380,25 @@
       </div>
     `;
   }
-    };
-      
+    // Check the payment status
+  const paymentStatus = localStorage.getItem('paymentStatus');
+  
+  if (paymentStatus === 'Unavailable') {
+    const paymentCell = document.getElementById('payment-status-cell');
+    
+    // Change "Pending" to "Unavailable" with a grey/warning style
+    paymentCell.innerHTML = `
+      <div style="color: #6c757d; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        Unavailable
+      </div>
+    `;
+  }
+    };  
     
   </script>
   
