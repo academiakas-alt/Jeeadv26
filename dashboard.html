@@ -334,95 +334,100 @@
   <div class="footer">
     JEE (Advanced) 2026
   </div>
-  <script>
-    // Run this when the dashboard loads
-    window.onload = function() {
-      // Retrieve the saved data (or show 'N/A' if empty)
-      const savedName = sessionStorage.getItem('jeeName') || 'N/A';
-      const savedAppNum = sessionStorage.getItem('jeeAppNumber') || 'N/A';
-      const savedDob = sessionStorage.getItem('jeeDob') || 'N/A';
+<script>
+  // Run this when the dashboard loads
+  window.onload = function() {
+    // 1. Retrieve the saved data (sessionStorage for login info)
+    const savedName = sessionStorage.getItem('jeeName') || 'N/A';
+    const savedAppNum = sessionStorage.getItem('jeeAppNumber') || 'N/A';
+    const savedDob = sessionStorage.getItem('jeeDob') || 'N/A';
 
-      // Inject the data into the sidebar
+    // 2. Inject the data into the sidebar
+    if (document.getElementById('display-name')) {
       document.getElementById('display-name').textContent = savedName;
+    }
+    if (document.getElementById('display-app-num')) {
       document.getElementById('display-app-num').textContent = savedAppNum;
-      
-      // Optional: Format the date nicely if it exists
-      if(savedDob && savedDob !== 'N/A') {
-         const dateObj = new Date(savedDob);
-         document.getElementById('display-dob').textContent = dateObj.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    }
+
+    // Format the date nicely if it exists
+    const dobElement = document.getElementById('display-dob');
+    if (dobElement) {
+      if (savedDob && savedDob !== 'N/A') {
+        const dateObj = new Date(savedDob);
+        dobElement.textContent = dateObj.toLocaleDateString('en-GB'); // DD/MM/YYYY
       } else {
-         document.getElementById('display-dob').textContent = savedDob;
+        dobElement.textContent = savedDob;
       }
-      // Check if registration is completed
-    const regStatus = localStorage.getItem('registrationStatus');
+    }
+
+    // 3. Check Statuses (localStorage for persistent progress)
     
+    // Registration Status
+    const regStatus = localStorage.getItem('registrationStatus');
     if (regStatus === 'Completed') {
       const statusCell = document.getElementById('reg-status-cell');
-      
-      // Update the cell with "Completed" styling
-      statusCell.innerHTML = `
-        <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          Completed
-        </div>
-      `;
+      if (statusCell) {
+        statusCell.innerHTML = `
+          <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Completed
+          </div>`;
+      }
     }
-        // Check if documents are uploaded
-  const uploadStatus = localStorage.getItem('uploadStatus');
-  
-  if (uploadStatus === 'Completed') {
-    const uploadCell = document.getElementById('upload-status-cell');
-    
-    // Change "Pending" to "Completed" with green styling
-    uploadCell.innerHTML = `
-      <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        Completed
-      </div>
-    `;
-  }
-    // Check the payment status
-  const paymentStatus = localStorage.getItem('paymentStatus');
-  
-  if (paymentStatus === 'Unavailable') {
-    const paymentCell = document.getElementById('payment-status-cell');
-    
-    // Change "Pending" to "Unavailable" with a grey/warning style
-    paymentCell.innerHTML = `
-      <div style="color: #6c757d; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        Unavailable
-      </div>
-    `;
-  }};
-      function handleLogout() {
-    // 1. Delete all stored data (Registration status, Uploads, Payment status)
+
+    // Upload Status
+    const uploadStatus = localStorage.getItem('uploadStatus');
+    if (uploadStatus === 'Completed') {
+      const uploadCell = document.getElementById('upload-status-cell');
+      if (uploadCell) {
+        uploadCell.innerHTML = `
+          <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Completed
+          </div>`;
+      }
+    }
+
+    // Payment Status
+    const paymentStatus = localStorage.getItem('paymentStatus');
+    if (paymentStatus === 'Unavailable') {
+      const paymentCell = document.getElementById('payment-status-cell');
+      if (paymentCell) {
+        paymentCell.innerHTML = `
+          <div style="color: #6c757d; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            Unavailable
+          </div>`;
+      }
+    }
+  }; // End of window.onload
+
+  function handleLogout() {
+    // 1. Clear all data
     localStorage.clear();
+    sessionStorage.clear(); // Clear login info too
     
-    // 2. Alert the user
     alert("You have been logged out. All session data has been cleared.");
 
-    // 3. Attempt to close the page
-    // Note: Browsers usually only allow scripts to close windows they opened.
-    // If it can't close, we redirect to the login page as a fallback.
-    if (window.close()) {
-        window.close();
-    } else {
-        window.location.href = 'jee-advanced-portal.html'; 
-    }
-      }
-      
-    };  
+    // 2. Try to close, otherwise redirect
+    window.close();
     
-  </script>
+    // If the window is still open after 300ms, redirect
+    setTimeout(function() {
+      window.location.href = 'jee-advanced-portal.html';
+    }, 300);
+  }
+</script>
+
   
 </body>
 </html>
