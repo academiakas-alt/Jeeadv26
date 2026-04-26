@@ -137,7 +137,7 @@
       <div class="radio-row">
         <input type="radio" name="provider"> BillDesk Payment Gateway <span style="color: #666;">(Net Banking/Credit Card/Debit Card/UPI)</span>
       </div>
-      <button class="btn-proceed">Proceed for payment</button>
+      <button class="btn-proceed" onclick="processPayment()">Proceed for payment</button>
     </div>
   </div>
   
@@ -148,12 +148,20 @@
 
 <script>
   window.onload = function() {
-    // Populate data from sessionStorage to maintain the portal feel
     document.getElementById('pay-name').textContent = sessionStorage.getItem('jeeName') || 'N/A';
     document.getElementById('pay-appnum').textContent = sessionStorage.getItem('jeeAppNumber') || 'N/A';
     document.getElementById('pay-dob').textContent = sessionStorage.getItem('jeeDob') || 'N/A';
   };
+
+  function processPayment() {
+    // 1. Set the payment status to Completed
+    localStorage.setItem('paymentStatus', 'Completed');
+    
+    // 2. Redirect back to dashboard
+    window.location.href = 'dashboard.html';
+  }
 </script>
+
 
 </body>
 </html>
