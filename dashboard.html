@@ -287,15 +287,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Registration</td>
-              <td>
-                <div class="status-pending">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                  Pending
-                </div>
-              </td>
-            </tr>
+                <tr>
+      <td>Registration</td>
+      <td id="reg-status-cell"> <div class="status-pending">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          Pending
+        </div>
+      </td>
+    </tr>
+
             <tr>
               <td>Upload Documents</td>
               <td>
@@ -343,6 +343,27 @@
          document.getElementById('display-dob').textContent = savedDob;
       }
     };
+      window.onload = function() {
+    // ... your existing code to display Name/App Number ...
+
+    // Check if registration is completed
+    const regStatus = localStorage.getItem('registrationStatus');
+    
+    if (regStatus === 'Completed') {
+      const statusCell = document.getElementById('reg-status-cell');
+      
+      // Update the cell with "Completed" styling
+      statusCell.innerHTML = `
+        <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Completed
+        </div>
+      `;
+    }
+  };
+    
   </script>
   
 </body>
