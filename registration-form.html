@@ -39,8 +39,128 @@
     .btn-proceed:hover { background: #218838; }
 
     .whatsapp-info { font-size: 11px; color: #666; margin-top: 4px; }
+    /* Custom Modal Styling */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-modal {
+  background: #fff;
+  width: 90%;
+  max-width: 850px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  background: #666;
+  color: white;
+  padding: 8px 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.modal-body ol {
+  padding-left: 20px;
+}
+
+.modal-body li {
+  margin-bottom: 8px;
+}
+
+.highlight-states {
+  background: #e7f1ff;
+  color: #0056b3;
+  padding: 5px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.modal-footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.confirm-text {
+  color: #0056b3;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.proceed-prompt {
+  color: #d9534f;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.modal-btn {
+  padding: 8px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.btn-yes { background: #0056b3; color: white; }
+.btn-no { background: #d9534f; color: white; }
+    
   </style>
 </head>
+  <div id="confirmModal" class="modal-overlay">
+  <div class="custom-modal">
+    <div class="modal-header">
+      Confirm !!
+      <span style="cursor:pointer" onclick="closeModal()">×</span>
+    </div>
+    <div class="modal-body">
+      <ol type="i">
+        <li>I hereby declare that all the particulars stated in this Registration Form are true to the best of my knowledge and belief...</li>
+        <li>I understand that an exam city not mentioned in my preferred choices may be allotted to me...</li>
+        <li>In case, it is found that I am ineligible to appear for JEE (Advanced) 2026 at any stage, I understand that my candidature will be cancelled...</li>
+        <li>I have verified that my photograph and signature are same as uploaded in JEE (Main) 2026...</li>
+        <li>I understand that the data from JEE (Advanced) 2026 including personal details may be shared with other Govt-funded institutes.</li>
+        <li>After successful submission, you need to complete the activities as follows:
+          <ul>
+            <li>Upload the Required Documents</li>
+            <li>Pay the registration fee.</li>
+          </ul>
+        </li>
+        <li class="highlight-states">You have chosen the exam cities in the following states : JHARKHAND</li>
+      </ol>
+
+      <div style="text-align:center; margin-top:20px;">
+        <p class="confirm-text">Once confirmed, no further changes are permitted.</p>
+        <p class="proceed-prompt">Do you want to proceed ?</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn btn-yes" onclick="finalConfirm()">Yes</button>
+      <button class="modal-btn btn-no" onclick="closeModal()">No</button>
+    </div>
+  </div>
+  </div>
+  
 <body>
 
   <div class="header">
@@ -181,18 +301,23 @@
     }
 
       function handleReview() {
-    const confirmed = confirm("Please check all details. Once confirmed, no further changes will be permitted. Do you want to proceed?");
-    
-    if(confirmed) {
-      // 1. Save the completion status in the browser's storage
-      localStorage.setItem('registrationStatus', 'Completed');
-      
-      alert("Step 1: Registration Form Completed successfully!");
-      
-      // 2. Redirect back to the dashboard
-      window.location.href = 'dashboard.html';
-    }
-  }
+  // Show the custom modal instead of a browser alert
+  document.getElementById('confirmModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('confirmModal').style.display = 'none';
+}
+
+function finalConfirm() {
+  // Save completion status as we did before
+  localStorage.setItem('registrationStatus', 'Completed');
+  
+  // Close modal and redirect
+  closeModal();
+  window.location.href = 'dashboard.html';
+}
+
 
   </script>
 </body>
