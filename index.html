@@ -189,105 +189,77 @@
       gap: 8px;
     }
 
-    .card-header svg { flex-shrink: 0; }
+    .card-header svg { flex-shrink: 0; }/* Ensure uniform card and body padding */
+.card-body { 
+    padding: 24px; /* Increased padding for better breathing room */
+}
 
-    .card-body { padding: 20px 18px; }
+/* Standardize all input groups */
+.form-group { 
+    margin-bottom: 20px; 
+}
 
-    /* ── LOGIN FORM ── */
-    .form-group { margin-bottom: 14px; }
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a3a6e;
+    margin-bottom: 8px; /* Consistent gap between label and input */
+}
 
-    .form-group label {
-      display: block;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #1a3a6e;
-      margin-bottom: 5px;
-    }
+/* Force all inputs to have the exact same height and border style */
+.form-group input, .form-group select {
+    width: 100%;
+    height: 40px; /* Fixed height for uniformity */
+    padding: 0 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 8px 11px;
-      border: 1.5px solid #a8bedf;
-      border-radius: 4px;
-      font-size: 13px;
-      font-family: 'Noto Sans', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-      background: #fafdff;
-    }
+/* Unified button styles */
+.btn-primary, .register-btn {
+    height: 44px; /* Uniform button height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase; /* Optional: for a more formal look */
+    font-size: 13px;
+}
 
-    .form-group input:focus, .form-group select:focus {
-      border-color: #1a4d9e;
-      box-shadow: 0 0 0 3px rgba(26,77,158,0.12);
-    }
+/* Specific fix for the Captcha row alignment */
+.captcha-row {
+    display: grid;
+    grid-template-columns: auto 40px 1fr; /* Fixed columns for consistent sizing */
+    gap: 10px;
+    align-items: center;
+}
 
-    .captcha-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+.captcha-box {
+    height: 40px; /* Matches input height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin: 0; /* Remove padding that might cause misalignment */
+}
 
-    .captcha-box {
-      background: linear-gradient(135deg, #e8eef8, #dce6f5);
-      border: 1.5px solid #a8bedf;
-      border-radius: 4px;
-      padding: 7px 14px;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 6px;
-      color: #0d2b5e;
-      font-family: 'Courier New', monospace;
-      user-select: none;
-      min-width: 110px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
+.captcha-refresh {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+    
 
-    .captcha-box::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 3px,
-        rgba(26,77,158,0.06) 3px,
-        rgba(26,77,158,0.06) 4px
-      );
-    }
-
-    .captcha-refresh {
-      background: none;
-      border: 1.5px solid #a8bedf;
-      border-radius: 4px;
-      padding: 6px 9px;
-      cursor: pointer;
-      color: #1a4d9e;
-      font-size: 16px;
-      transition: background 0.2s;
-    }
-
-    .captcha-refresh:hover { background: #e8eef8; }
-
-    .btn-primary {
-      width: 100%;
-      background: linear-gradient(135deg, #1a4d9e, #0d2b5e);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Noto Sans', sans-serif;
-      letter-spacing: 0.3px;
-      transition: opacity 0.2s, transform 0.1s;
-      margin-top: 4px;
-    }
-
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary:active { transform: translateY(0); }
+    
 
     .link-row {
       display: flex;
