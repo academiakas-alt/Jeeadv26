@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JEE (Advanced) 2026 – Applicant Login Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP STRIP ── */
+    .top-strip {
+      background: #1a3a6e;
+      color: #fff;
+      font-size: 11px;
+      text-align: center;
+      padding: 4px 8px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #0d2b5e 0%, #1a4d9e 50%, #0d2b5e 100%);
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 4px solid #e8a020;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .header-logos {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* SVG IIT Roorkee logo placeholder */
+    .iit-logo {
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+    }
+
+    .header-center {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-center h1 {
+      font-family: 'Noto Serif', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+
+    .header-center .subtitle {
+      font-size: 13px;
+      color: #ffd080;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .header-center .conducted-by {
+      font-size: 11.5px;
+      color: #c0d8ff;
+      margin-top: 3px;
+    }
+
+    /* Emblem-style right logo */
+    .emblem-logo {
+      width: 70px;
+      height: 70px;
+      flex-shrink: 0;
+    }
+
+    /* ── NAV BAR ── */
+    nav {
+      background: #1d3461;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 0 8px;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #e8a020;
+    }
+
+    nav a {
+      color: #d0e4ff;
+      text-decoration: none;
+      font-size: 12.5px;
+      padding: 9px 14px;
+      display: block;
+      transition: background 0.2s, color 0.2s;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+    }
+
+    nav a:hover, nav a.active {
+      background: #0d2b5e;
+      color: #ffd080;
+      border-bottom: 3px solid #e8a020;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-bar {
+      background: #fff3cd;
+      border-top: 1px solid #ffc107;
+      border-bottom: 1px solid #ffc107;
+      padding: 5px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-bar marquee {
+      font-size: 12.5px;
+      color: #7b4a00;
+      font-weight: 500;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      gap: 22px;
+    }
+
+    .page-title {
+      text-align: center;
+      font-family: 'Noto Serif', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #0d2b5e;
+      border-bottom: 3px solid #e8a020;
+      padding-bottom: 8px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* ── TWO-COLUMN LAYOUT ── */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    @media (max-width: 640px) {
+      .content-grid { grid-template-columns: 1fr; }
+      header { flex-wrap: wrap; justify-content: center; text-align: center; }
+      .header-logos, .emblem-logo { margin: 0 auto; }
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: #fff;
+      border: 1px solid #c8d8f0;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(13,43,94,0.1);
+    }
+
+    .card-header {
+      background: linear-gradient(90deg, #1a3a6e, #2255a4);
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 10px 16px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header svg { flex-shrink: 0; }
+
+    .card-body { padding: 20px 18px; }
+
+    /* ── LOGIN FORM ── */
+    .form-group { margin-bottom: 14px; }
+
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #1a3a6e;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1.5px solid #a8bedf;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'Noto Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fafdff;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #1a4d9e;
+      box-shadow: 0 0 0 3px rgba(26,77,158,0.12);
+    }
+
+    .captcha-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .captcha-box {
+      background: linear-gradient(135deg, #e8eef8, #dce6f5);
+      border: 1.5px solid #a8bedf;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      color: #0d2b5e;
+      font-family: 'Courier New', monospace;
+      user-select: none;
+      min-width: 110px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .captcha-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(26,77,158,0.06) 3px,
+        rgba(26,77,158,0.06) 4px
+      );
+    }
+
+    .captcha-refresh {
+      background: none;
+      border: 1.5px solid #a8bedf;
+      border-radius: 4px;
+      padding: 6px 9px;
+      cursor: pointer;
+      color: #1a4d9e;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .captcha-refresh:hover { background: #e8eef8; }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #1a4d9e, #0d2b5e);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Noto Sans', sans-serif;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, transform 0.1s;
+      margin-top: 4px;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .link-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 12px;
+    }
+
+    .link-row a {
+      color: #1a4d9e;
+      text-decoration: none;
+    }
+    .link-row a:hover { text-decoration: underline; }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed #c8d8f0;
+      margin: 14px 0;
+    }
+
+    .register-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #c0392b, #96281b);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Noto Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+
+    .register-btn:hover { opacity: 0.9; }
+
+    /* ── INFO PANEL ── */
+    .info-panel .card-body { padding: 0; }
+
+    .info-item {
+      padding: 11px 16px;
+      border-bottom: 1px solid #e8eef8;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12.5px;
+      color: #2c3e60;
+      line-height: 1.5;
+    }
+
+    .info-item:last-child { border-bottom: none; }
+
+    .info-item .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #e8a020;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .info-item strong { color: #0d2b5e; }
+
+    /* ── NOTICE BOX ── */
+    .notice-box {
+      background: #fff8e1;
+      border: 1.5px solid #ffc107;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 12.5px;
+      color: #5d4000;
+      line-height: 1.6;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .notice-box strong {
+      color: #c0392b;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    /* ── IMPORTANT DATES ── */
+    .dates-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    .dates-table th {
+      background: #1a3a6e;
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .dates-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #e0e8f4;
+      color: #2c3e60;
+    }
+
+    .dates-table tr:nth-child(even) td { background: #f4f8ff; }
+    .dates-table tr:hover td { background: #e8f0fc; }
+
+    .date-highlight { color: #c0392b; font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d2b5e;
+      color: #9bbde0;
+      text-align: center;
+      font-size: 11.5px;
+      padding: 12px 20px;
+      line-height: 1.8;
+      margin-top: auto;
+    }
+
+    footer a { color: #6baed6; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .footer-links a {
+      color: #c0d8ff;
+      font-size: 12px;
+      padding: 2px 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    .footer-links a:hover { border-bottom-color: #c0d8ff; }
+
+    /* spinner for loading */
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  Government of India | Ministry of Education | Joint Entrance Examination (Advanced) 2026
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logos">
+    <!-- IIT Roorkee SVG Logo -->
+    <svg class="iit-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="none" stroke="#e8a020" stroke-width="2"/>
+      <circle cx="50" cy="50" r="42" fill="none" stroke="#e8a020" stroke-width="1"/>
+      <!-- Gear/cog wheel -->
+      <circle cx="50" cy="50" r="18" fill="#e8a020"/>
+      <circle cx="50" cy="50" r="10" fill="#0d2b5e"/>
+      <!-- Gear teeth -->
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(0 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(45 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(90 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(135 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(180 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(225 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(270 50 50)"/>
+      <rect x="47" y="20" width="6" height="10" rx="2" fill="#e8a020" transform="rotate(315 50 50)"/>
+      <!-- Book at bottom -->
+      <rect x="28" y="68" width="44" height="6" rx="2" fill="#fff" opacity="0.8"/>
+      <rect x="48" y="64" width="4" height="14" rx="1" fill="#fff" opacity="0.9"/>
+      <text x="50" y="97" text-anchor="middle" fill="#ffd080" font-size="7" font-weight="700" font-family="sans-serif">IIT ROORKEE</text>
+    </svg>
+  </div>
+
+  <div class="header-center">
+    <h1>JEE (Advanced) 2026</h1>
+    <div class="subtitle">Joint Entrance Examination (Advanced) – Applicant Login Portal</div>
+    <div class="conducted-by">Organised by IIT Roorkee &nbsp;|&nbsp; jeeadv.ac.in</div>
+  </div>
+
+  <!-- India Emblem SVG -->
+  <svg class="emblem-logo" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+    <!-- Simplified Ashoka Emblem -->
+    <ellipse cx="50" cy="36" rx="28" ry="28" fill="none" stroke="#e8a020" stroke-width="1.5"/>
+    <!-- Three lions simplified -->
+    <rect x="38" y="18" width="10" height="16" rx="3" fill="#ffd080"/>
+    <rect x="50" y="18" width="10" height="16" rx="3" fill="#ffd080"/>
+    <rect x="44" y="14" width="12" height="16" rx="3" fill="#ffeaa0"/>
+    <!-- Abacus -->
+    <rect x="30" y="50" width="40" height="5" rx="2" fill="#e8a020"/>
+    <!-- Dharma Chakra -->
+    <circle cx="50" cy="40" r="7" fill="none" stroke="#e8a020" stroke-width="1.5"/>
+    <circle cx="50" cy="40" r="2" fill="#e8a020"/>
+    <line x1="50" y1="33" x2="50" y2="47" stroke="#e8a020" stroke-width="1"/>
+    <line x1="43" y1="40" x2="57" y2="40" stroke="#e8a020" stroke-width="1"/>
+    <line x1="45" y1="35" x2="55" y2="45" stroke="#e8a020" stroke-width="0.8"/>
+    <line x1="55" y1="35" x2="45" y2="45" stroke="#e8a020" stroke-width="0.8"/>
+    <!-- Animals on base -->
+    <path d="M30,55 Q35,50 40,55" fill="#ffd080"/>
+    <path d="M48,55 Q53,50 58,55" fill="#ffd080"/>
+    <path d="M60,55 Q65,50 70,55" fill="#ffd080"/>
+    <!-- Text -->
+    <rect x="22" y="58" width="56" height="12" rx="2" fill="#c8a850"/>
+    <text x="50" y="68" text-anchor="middle" fill="#0d2b5e" font-size="6.5" font-weight="800" font-family="serif">सत्यमेव जयते</text>
+    <!-- Bottom -->
+    <text x="50" y="82" text-anchor="middle" fill="#ffd080" font-size="6" font-family="sans-serif">INDIA</text>
+  </svg>
+</header>
+
+<!-- NAV BAR -->
+<nav>
+  <a href="#" class="active">Home</a>
+  <a href="#">Information Brochure</a>
+  <a href="#">Syllabus</a>
+  <a href="#">Mock Test</a>
+  <a href="#">Instructions</a>
+  <a href="#">Important Dates</a>
+  <a href="#">Contact Us</a>
+  <a href="#">Help / FAQ</a>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="4">
+    🔔 &nbsp; JEE (Advanced) 2026 Registration is OPEN from 23rd April 2026 (10:00 IST) — Last date: 2nd May 2026 (23:59 IST) &nbsp;&nbsp;|&nbsp;&nbsp;
+    📅 &nbsp; Fee Payment deadline: 4th May 2026 (23:59 IST) &nbsp;&nbsp;|&nbsp;&nbsp;
+    📋 &nbsp; Admit Card download: 11th May 2026 (17:00 IST) onwards &nbsp;&nbsp;|&nbsp;&nbsp;
+    🗓️ &nbsp; Exam Date: 17th May 2026 (Sunday) — Paper 1: 09:00–12:00 IST | Paper 2: 14:30–17:30 IST &nbsp;&nbsp;|&nbsp;&nbsp;
+    📢 &nbsp; Result Declaration: 1st June 2026 (10:00 IST) &nbsp;&nbsp;&nbsp;
+  </marquee>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <h2 class="page-title">Candidate Login — JEE (Advanced) 2026</h2>
+
+  <!-- NOTICE -->
+  <div class="notice-box">
+    <strong>⚠️ Important Notice:</strong>
+    Online Registration for JEE (Advanced) 2026 for <strong>JEE Main 2026 Qualified Candidates</strong> is open from
+    <strong>23rd April 2026</strong>. Please use your <strong>JEE Main Application Number</strong> and
+    <strong>Date of Birth</strong> to log in. Ensure you have your JEE Main 2026 credentials before proceeding.
+  </div>
+
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+
+    <!-- LOGIN CARD -->
+    <div class="card">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Candidate Login (JEE Main Qualified)
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>JEE Main 2026 Application Number *</label>
+          <input type="text" placeholder="Enter your JEE Main Application Number" maxlength="12"/>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth *</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Candidate's Name *</label>
+          <input type="text" placeholder="Enter your name as per JEE Main form"/>
+        </div>
+        <div class="form-group">
+          <label>Enter Captcha *</label>
+          <div class="captcha-row">
+            <div class="captcha-box" id="captchaDisplay">X7K2Q9</div>
+            <button class="captcha-refresh" onclick="refreshCaptcha()" title="Refresh Captcha">↻</button>
+            <input type="text" placeholder="Enter captcha" style="flex:1"/>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="handleLogin()">🔐 &nbsp; Login</button>
+        <div class="link-row">
+          <a href="#">Forgot Password?</a>
+          <a href="#">Help / Instructions</a>
+        </div>
+        <hr class="divider"/>
+        <button class="register-btn">📝 &nbsp; New Registration (First Time)</button>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:18px;">
+
+      <!-- Direct Registered Candidates -->
+      <div class="card">
+        <div class="card-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20v-2a8 8 0 0 1 16 0v2"/>
+          </svg>
+          Direct Registered Candidates (OCI/PIO & Foreign)
+        </div>
+        <div class="card-body">
+          <p style="font-size:12.5px;color:#2c3e60;margin-bottom:12px;line-height:1.6;">
+            Foreign National candidates and OCI/PIO (F) candidates who have directly registered may login here.
+          </p>
+          <div class="form-group">
+            <label>Registration Number *</label>
+            <input type="text" placeholder="Enter Registration Number"/>
+          </div>
+          <div class="form-group">
+            <label>Password *</label>
+            <input type="password" placeholder="Enter Password"/>
+          </div>
+          <button class="btn-primary" style="background:linear-gradient(135deg,#1a7a4e,#0e5235);">
+            🔐 &nbsp; Login (Foreign/OCI)
+          </button>
+        </div>
+      </div>
+
+      <!-- Important Dates -->
+      <div class="card">
+        <div class="card-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Important Dates
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="dates-table">
+            <tr>
+              <th>Event</th>
+              <th>Date / Time (IST)</th>
+            </tr>
+            <tr>
+              <td>Registration Opens</td>
+              <td class="date-highlight">23 Apr 2026, 10:00</td>
+            </tr>
+            <tr>
+              <td>Registration Closes</td>
+              <td class="date-highlight">2 May 2026, 23:59</td>
+            </tr>
+            <tr>
+              <td>Fee Payment Last Date</td>
+              <td>4 May 2026, 23:59</td>
+            </tr>
+            <tr>
+              <td>Admit Card Download</td>
+              <td>11 May 2026, 17:00</td>
+            </tr>
+            <tr>
+              <td>JEE (Adv.) Exam Date</td>
+              <td class="date-highlight">17 May 2026 (Sunday)</td>
+            </tr>
+            <tr>
+              <td>Result Declaration</td>
+              <td>1 Jun 2026, 10:00</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="card" style="width:100%;max-width:900px;" >
+    <div class="card-header">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      Instructions for Candidates
+    </div>
+    <div class="info-panel card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+      <div>
+        <div class="info-item"><span class="dot"></span><span>Use your <strong>JEE Main 2026 Application Number</strong> and <strong>Date of Birth</strong> to login.</span></div>
+        <div class="info-item"><span class="dot"></span><span>Only top <strong>2,50,000 qualified candidates</strong> from JEE Main 2026 are eligible.</span></div>
+        <div class="info-item"><span class="dot"></span><span>Upload all documents in the <strong>prescribed format</strong> (JPEG/PDF as specified).</span></div>
+        <div class="info-item"><span class="dot"></span><span>Application fee: <strong>₹3200 (General/OBC-NCL)</strong> and <strong>₹1600 (Female/SC/ST/PwD)</strong>.</span></div>
+      </div>
+      <div>
+        <div class="info-item"><span class="dot"></span><span>Select <strong>8 preferred exam cities</strong> in order of preference during registration.</span></div>
+        <div class="info-item"><span class="dot"></span><span>Pay fees via <strong>UPI, Debit/Credit Card</strong>, or Net Banking before 4th May 2026.</span></div>
+        <div class="info-item"><span class="dot"></span><span>Once submitted, <strong>no corrections</strong> are allowed in the application form.</span></div>
+        <div class="info-item"><span class="dot"></span><span>For technical issues, contact the <strong>JEE (Advanced) 2026 helpdesk</strong> at jeeadv.ac.in.</span></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER LINKS -->
+<div style="background:#1a3a6e;padding:8px 20px;display:flex;justify-content:center;">
+  <div class="footer-links">
+    <a href="#">Information Brochure</a>
+    <a href="#">Eligibility Criteria</a>
+    <a href="#">Exam Pattern</a>
+    <a href="#">Previous Year Papers</a>
+    <a href="#">Answer Keys</a>
+    <a href="#">Results Archive</a>
+    <a href="#">Counselling (JoSAA)</a>
+    <a href="#">Accessibility</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>© Copyright JEE (Advanced) 2026 &nbsp;|&nbsp; Organised by <strong style="color:#fff;">IIT Roorkee</strong> on behalf of JAB &nbsp;|&nbsp;
+  Best viewed in Chrome / Firefox / Edge (latest versions) &nbsp;|&nbsp; Screen Resolution 1024×768 or higher</div>
+  <div style="margin-top:4px;">
+    Website: <a href="#">jeeadv.ac.in</a> &nbsp;|&nbsp; Applicant Portal: <a href="#">jeeadv.nic.in</a> &nbsp;|&nbsp;
+    For queries: <a href="#">helpdesk@jeeadv.ac.in</a>
+  </div>
+</footer>
+
+<script>
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  function generateCaptcha() {
+    let c = '';
+    for (let i = 0; i < 6; i++) c += chars[Math.floor(Math.random() * chars.length)];
+    return c;
+  }
+
+  function refreshCaptcha() {
+    document.getElementById('captchaDisplay').textContent = generateCaptcha();
+  }
+
+    function handleLogin() {
+    // Redirects the current tab to the new dashboard page
+    window.location.href = 'dashboard.html';
+  }
+
+  // Initialise with fresh captcha
+  document.getElementById('captchaDisplay').textContent = generateCaptcha();
+</script>
+</body>
+</html>
