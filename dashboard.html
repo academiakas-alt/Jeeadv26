@@ -342,11 +342,7 @@
       } else {
          document.getElementById('display-dob').textContent = savedDob;
       }
-    };
-      window.onload = function() {
-    // ... your existing code to display Name/App Number ...
-
-    // Check if registration is completed
+      // Check if registration is completed
     const regStatus = localStorage.getItem('registrationStatus');
     
     if (regStatus === 'Completed') {
@@ -362,7 +358,8 @@
         </div>
       `;
     }
-  };
+    };
+      
     
   </script>
   
