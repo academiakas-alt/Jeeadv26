@@ -425,7 +425,46 @@
     setTimeout(function() {
       window.location.href = 'index.html';
     }, 300);
+  };// ... existing registration and upload checks ...
+
+// Check the payment status
+const paymentStatus = localStorage.getItem('paymentStatus');
+
+if (paymentStatus === 'Completed') {
+  const paymentCell = document.getElementById('payment-status-cell');
+  if (paymentCell) {
+    // 1. Change status text to Completed (Green)
+    paymentCell.innerHTML = `
+      <div style="color: #28a745; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Completed
+      </div>
+    `;
   }
+
+  // 2. Create and show the Download Confirmation Page button
+  // We place this below the status table or in the main content area
+  const contentArea = document.querySelector('.content-area') || document.body;
+  const downloadBtnContainer = document.createElement('div');
+  downloadBtnContainer.style.marginTop = '30px';
+  downloadBtnContainer.style.textAlign = 'center';
+  
+  downloadBtnContainer.innerHTML = `
+    <button onclick="window.print()" style="background-color: #e8a020; color: #fff; border: none; padding: 12px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Download Confirmation Page
+    </button>
+  `;
+  
+  contentArea.appendChild(downloadBtnContainer);
+}
+  
 </script>
 
   
