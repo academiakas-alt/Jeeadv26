@@ -28,7 +28,6 @@
     label { font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #555; }
     input, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
     input:disabled { background: #f9f9f9; cursor: not-allowed; }
-    
     .section-title { background: #f8f9fa; padding: 8px 12px; margin: 20px 0 15px 0; font-weight: bold; font-size: 14px; border-left: 4px solid #0056b3; }
     
     .city-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -85,6 +84,23 @@
           <p id="certNotice" style="font-size: 12px; margin-top: 5px; color: #0056b3; display: none;">
             * You will be required to upload the certificate/declaration in the next step.
           </p>
+          <div class="form-group">
+            <label>Year of Class XII (or equivalent) Appearance *</label>
+            <select>
+              <option value="">--Select Year--</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year of First JEE (Advanced) Appearance *</label>
+            <select>
+              <option value="">--Select Year--</option>
+              <option value="never">Never Appeared</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
         </div>
 
         <div class="section-title">Communication Details</div>
