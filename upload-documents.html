@@ -83,9 +83,15 @@
                   <span class="size-info">Format: PDF/JPG | Size: 50KB - 300KB</span>
                 </div>
                 <div id="previewBox" class="preview-container">
-                  <p style="font-size: 12px; margin-bottom: 5px; color: #28a745;">Preview Embedded Below</p>
-                  <img id="previewImg" src="#" alt="Preview">
-                </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;">
+    <span style="font-size: 12px; color: #28a745; font-weight: bold;">Preview Embedded Below</span>
+    <button type="button" onclick="removeFile()" style="background: #d9534f; color: white; border: none; padding: 2px 8px; border-radius: 3px; font-size: 11px; cursor: pointer;">
+      Remove File
+    </button>
+  </div>
+  <div id="previewContent"></div>
+</div>
+
               </td>
             </tr>
           </tbody>
@@ -109,25 +115,56 @@
 
   <script>
     function handleFileSelect(event) {
-      const file = event.target.files[0];
-      const previewBox = document.getElementById('previewBox');
-      const previewImg = document.getElementById('previewImg');
+  const file = event.target.files[0];
+  const previewBox = document.getElementById('previewBox');
+  const previewContent = document.getElementById('previewContent');
 
-      if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          previewImg.src = e.target.result;
-          previewBox.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-      } else if (file && file.type === "application/pdf") {
-        previewBox.style.display = 'block';
-        previewImg.style.display = 'none';
-        const pdfMsg = document.createElement('p');
-        pdfMsg.innerText = "PDF file selected: " + file.name;
-        previewBox.appendChild(pdfMsg);
-      }
-    }
+  // Clear previous preview content
+  previewContent.innerHTML = '';
+  
+  if (!file) {
+    previewBox.style.display = 'none';
+    return;
+  }
+
+  // Basic validation for size (50KB to 300KB)
+  const fileSizeKB = file.size / 1024;
+  if (fileSizeKB < 50 || fileSizeKB > 300) {
+    alert("File size must be between 50KB and 300KB. Your file is " + Math.round(fileSizeKB) + "KB.");
+    removeFile(); // Clear the selection
+    return;
+  }
+
+  const fileURL = URL.createObjectURL(file);
+
+  if (file.type === "image/jpeg" || file.type === "image/jpg") {
+    const img = document.createElement('img');
+    img.src = fileURL;
+    img.style.maxWidth = "100%";
+    img.style.maxHeight = "400px";
+    previewContent.appendChild(img);
+    previewBox.style.display = 'block';
+  } 
+  else if (file.type === "application/pdf") {
+    const embed = document.createElement('embed');
+    embed.src = fileURL;
+    embed.type = "application/pdf";
+    embed.width = "100%";
+    embed.height = "500px";
+    previewContent.appendChild(embed);
+    previewBox.style.display = 'block';
+  }
+}
+
+function removeFile() {
+  const fileInput = document.getElementById('classXFile');
+  const previewBox = document.getElementById('previewBox');
+  const previewContent = document.getElementById('previewContent');
+
+  fileInput.value = ""; // Clears the actual file selection
+  previewContent.innerHTML = "";
+  previewBox.style.display = 'none';
+}
 
     function handleSubmit() {
   const fileInput = document.getElementById('classXFile');
