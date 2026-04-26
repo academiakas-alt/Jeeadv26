@@ -244,10 +244,25 @@
   <div class="main-container">
     
     <div class="sidebar">
-      <div class="profile-section">
-        <div class="profile-pic-placeholder"></div>
-        <div class="app-number">JEE (Main) Application Number <span></span></div>
+            <div class="profile-section">
+        <div class="profile-pic-placeholder" style="display:flex; align-items:center; justify-content:center; color:#ccc; font-size:12px;">Photo</div>
+        
+        <div style="margin-top: 15px; font-size: 11px; color: #a8bedf;">
+          <div style="margin-bottom: 8px;">
+            Candidate Name:<br>
+            <span id="display-name" style="color: #fff; font-size: 13px; font-weight: 600;">-</span>
+          </div>
+          <div style="margin-bottom: 8px;">
+            JEE (Main) App No:<br>
+            <span id="display-app-num" style="color: #fff; font-size: 13px; font-weight: 600;">-</span>
+          </div>
+          <div>
+            Date of Birth:<br>
+            <span id="display-dob" style="color: #fff; font-size: 13px; font-weight: 600;">-</span>
+          </div>
+        </div>
       </div>
+
       
       <div class="activity-list-header">
         ☰ Activity List
@@ -308,6 +323,27 @@
   <div class="footer">
     JEE (Advanced) 2026
   </div>
+  <script>
+    // Run this when the dashboard loads
+    window.onload = function() {
+      // Retrieve the saved data (or show 'N/A' if empty)
+      const savedName = sessionStorage.getItem('jeeName') || 'N/A';
+      const savedAppNum = sessionStorage.getItem('jeeAppNumber') || 'N/A';
+      const savedDob = sessionStorage.getItem('jeeDob') || 'N/A';
 
+      // Inject the data into the sidebar
+      document.getElementById('display-name').textContent = savedName;
+      document.getElementById('display-app-num').textContent = savedAppNum;
+      
+      // Optional: Format the date nicely if it exists
+      if(savedDob && savedDob !== 'N/A') {
+         const dateObj = new Date(savedDob);
+         document.getElementById('display-dob').textContent = dateObj.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+      } else {
+         document.getElementById('display-dob').textContent = savedDob;
+      }
+    };
+  </script>
+  
 </body>
 </html>
