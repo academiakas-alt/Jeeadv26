@@ -180,13 +180,20 @@
       notice.style.display = status !== "" ? "block" : "none";
     }
 
-    function handleReview() {
-      const confirmed = confirm("Please check all details. Once confirmed, no further changes will be permitted. Do you want to proceed to Step 2 (Upload Documents)?");
-      if(confirmed) {
-        alert("Step 1 Completed successfully!");
-        // Logic for redirecting to Step 2 would go here
-      }
+      function handleReview() {
+    const confirmed = confirm("Please check all details. Once confirmed, no further changes will be permitted. Do you want to proceed?");
+    
+    if(confirmed) {
+      // 1. Save the completion status in the browser's storage
+      localStorage.setItem('registrationStatus', 'Completed');
+      
+      alert("Step 1: Registration Form Completed successfully!");
+      
+      // 2. Redirect back to the dashboard
+      window.location.href = 'dashboard.html';
     }
+  }
+
   </script>
 </body>
 </html>
