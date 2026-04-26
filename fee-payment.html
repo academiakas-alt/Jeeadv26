@@ -89,7 +89,13 @@
       </div>
     </div>
   </div>
-
+<script>
+  // When the user lands on this page, set the status to 'Unavailable'
+  window.onload = function() {
+    localStorage.setItem('paymentStatus', 'Unavailable');
+  };
+</script>
+  
 </body>
 </html>
 
