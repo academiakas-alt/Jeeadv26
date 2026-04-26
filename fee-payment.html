@@ -106,7 +106,15 @@
       You are requested to <span class="highlight-green">Pay 3200 INR</span> towards Registration Fee.
     </p>
 
-    <button class="btn-pay" onclick="triggerServiceAlert()">Pay Registration Fee</button>
+    <button class="btn-pay" onclick="goToPaymentGateway()">Pay Registration Fee</button>
+
+<script>
+  function goToPaymentGateway() {
+      // Navigate to the new page instead of showing an alert
+      window.location.href = 'payment-gateway.html';
+  }
+</script>
+
 
     <div class="charges-box">
       <div class="charges-header">
